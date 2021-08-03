@@ -1,0 +1,23 @@
+server {
+listen 80;
+server_name lt-2021-063.cloudns.ph www.lt-2021-063.clodns.ph;
+return 301 https://$server_name$request_uri;
+}
+server {
+listen 443 ssl;
+server_name lt-2021-063.cloudns.ph www.lt-2021-063.clodns.ph;
+ssl on;
+ssl_certificate /etc/letsencrypt/archive/lt-2021-063.cloudns.ph/fullchain1.pem;
+ssl_certificate_key /etc/letsencrypt/archive/lt-2021-063.cloudns.ph/privkey1.pem;
+root /var/www/html;
+index index.html index.htm index.nginx-debian.html;
+location / {
+proxy_pass http://127.0.0.1:8081;
+}
+location /student1111 {
+}
+location /secret {
+auth_basic "Administrator's Area";
+auth_basic_user_file /etc/nginx/.htpasswd;
+}
+}
